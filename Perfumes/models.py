@@ -22,6 +22,9 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
+    class Meta:
+        db_table = 'productos'  # Especifica la tabla existente
+
 class Carrito(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
