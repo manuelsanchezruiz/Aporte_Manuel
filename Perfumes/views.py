@@ -5,13 +5,48 @@ from .forms import RegistrarceForm, SecionForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Producto, Carrito
 from django.contrib.auth.models import Group
+from .forms import RegistrarceForm, SecionForm, ProductoForm  # Asegúrate de importar ProductoForm
+
 
 def index(request):
     return render(request, 'perfumes/Principal.html')  # Asegúrate de que 'Principal.html' exista
 
-def productos_list(request):
+
+def listar_productos(request):
     productos = Producto.objects.all()
-    return render(request, 'perfumes/productos_list.html', {'productos': productos})
+    return render(request, 'perfumes/listar_productos.html', {'productos': productos})
+
+@login_required
+def agregar_producto(request):
+    if request.method == "POST":
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_productos')
+    else:
+        form = ProductoForm()
+    return render(request, 'perfumes/agregar_producto.html', {'form': form})
+
+@login_required
+def editar_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    if request.method == "POST":
+        form = ProductoForm(request.POST, request.FILES, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_productos')
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'perfumes/editar_producto.html', {'form': form})
+
+@login_required
+def eliminar_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    if request.method == "POST":
+        producto.delete()
+        return redirect('listar_productos')
+    return render(request, 'perfumes/eliminar_producto.html', {'producto': producto})
+
 
 def Registrarce(request):
     if request.method == 'POST':
