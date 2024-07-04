@@ -1,0 +1,40 @@
+/* Estilos para los botones específicos del panel de administración */
+.navbar-nav .nav-item .nav-link {
+    color: #333; /* Color del texto de los enlaces */
+}
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    color: #333; /* Color del texto de los elementos de menú desplegable */
+}
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilos para los enlaces de navegación */
+.navbar-nav .nav-item .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* Estilos para los menús desplegables */
+.navbar-nav .nav-item .dropdown-menu {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: normal;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Otros estilos específicos según necesidades */

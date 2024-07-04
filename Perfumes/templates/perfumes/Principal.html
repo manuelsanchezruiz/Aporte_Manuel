@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Página de inicio de la tienda Perfam</title>
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp">
+    <!-- Iconos de Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- CSS del tema principal (incluye Bootstrap)-->
+    <link href="{% static 'Perfumes/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+
+<!-- Navegación-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Inicio Perfum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">Acerca de</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Todos los productos</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Productos populares</a></li>
+                        <li><a class="dropdown-item" href="#!">Nuevos productos</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form action="{% url 'ver_carrito' %}">
+                <button class="btn btn-outline-dark" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    Carrito
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">{{ request.user.carrito_set.count }}</span>
+                </button>
+            </form>
+            <form class="d-flex" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-outline-dark" type="submit">
+                    Cerrar sesión
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- Cabecera-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Elige tus mejores fragancia</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Agg mas labia</p>
+        </div>
+    </div>
+</header>
+<!-- Sección-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for producto in productos %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Imagen del Producto-->
+                    <img class="card-img-top" src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" />
+                    <!-- Detalles del Producto-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Nombre del Producto-->
+                            <h5 class="fw-bolder">{{ producto.nombre }}</h5>
+                            <!-- Precio del Producto-->
+                            ${{ producto.precio }}
+                        </div>
+                    </div>
+                    <!-- Acciones del Producto-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="{% url 'agregar_al_carrito' producto.id %}">Agregar al carrito</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Pie de página-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Tu sitio web 2024</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="{% static 'Perfumes/js/scripts.js' %}"></script>
+</body>
+</html>
