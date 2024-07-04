@@ -67,16 +67,15 @@ WSGI_APPLICATION = 'Aplicacion_Perfumen.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bd_perfumes_bow6',
-        'USER': 'bd_perfumes_bow6_user',
-        'PASSWORD': 'roFaEPtiatg2uUnL9ir9MSo1oyAbmdbP',
-        'HOST': 'dpg-cq3cje2ju9rs739cdnrg-a.oregon-postgres.render.com',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://bd_perfumes_bow6_user:roFaEPtiatg2uUnL9ir9MSo1oyAbmdbP@dpg-cq3cje2ju9rs739cdnrg-a/bd_perfumes_bow6',
+        conn_max_age=600
+    )
 }
+
 
 
 
