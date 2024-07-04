@@ -54,7 +54,7 @@ def Secion(request):
     return render(request, 'perfumes/Secion.html', {'form': form})
 
 @login_required
-def Principal(request):
+def principal(request):
     productos = Producto.objects.all()
     return render(request, 'perfumes/Principal.html', {'productos': productos})
 
