@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'Aplicacion_Perfumen.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        default='postgresql://bd_perfumes_user:5NXfvgtuHMpgRJQxCySHPxCSTY5pUBee@dpg-cq2ln0jv2p9s73f0221g-a/bd_perfumes',
         conn_max_age=600
     )
 }
@@ -105,12 +105,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-# This setting informs Django of the URI path from which your static files will be served to users
-# Here, they well be accessible at your-domain.onrender.com/static/... or yourcustomdomain.com/static/...
 
 STATIC_URL = 'static/'
 
