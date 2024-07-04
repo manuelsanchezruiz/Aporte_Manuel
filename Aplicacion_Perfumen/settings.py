@@ -67,12 +67,17 @@ WSGI_APPLICATION = 'Aplicacion_Perfumen.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://bd_perfumes_user:5NXfvgtuHMpgRJQxCySHPxCSTY5pUBee@dpg-cq2ln0jv2p9s73f0221g-a/bd_perfumes',
+        default='postgresql://bd_perfumes_bow6_user:roFaEPtiatg2uUnL9ir9MSo1oyAbmdbP@dpg-cq3cje2ju9rs739cdnrg-a/bd_perfumes_bow6',
         conn_max_age=600
     )
 }
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
