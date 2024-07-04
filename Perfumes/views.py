@@ -5,7 +5,6 @@ from .forms import RegistrarceForm, SecionForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Producto, Carrito
 from django.contrib.auth.models import Group
-from django.shortcuts import render
 
 def index(request):
     return render(request, 'perfumes/Principal.html')  # Asegúrate de que 'Principal.html' exista
@@ -33,7 +32,6 @@ def Registrarce(request):
     else:
         form = RegistrarceForm()
     return render(request, 'perfumes/Registrarce.html', {'form': form})
-
 
 def Secion(request):
     if request.method == 'POST':
