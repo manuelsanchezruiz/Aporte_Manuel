@@ -16,11 +16,11 @@ class Usuario(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.DecimalField(decimal_places=2, max_digits=10)
     imagen = models.ImageField(upload_to='productos/')
-
-    def __str__(self):
-        return self.nombre
+    
+    class Meta:
+        db_table = 'productos'
 
 class Carrito(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
