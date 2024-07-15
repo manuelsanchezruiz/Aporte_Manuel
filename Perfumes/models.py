@@ -6,6 +6,8 @@ class Usuario(models.Model):
     email = models.EmailField()
     contrasena = models.CharField(max_length=100)
     rol = models.CharField(max_length=50)
+    nombres = models.CharField(max_length=50, null=True, blank=True)
+    apellidos = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.nombre_usuario

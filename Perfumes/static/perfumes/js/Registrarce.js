@@ -1,28 +1,42 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('btn-registrarse').addEventListener('click', function(event) {
-        if (!validateForm()) {
-            event.preventDefault(); // Evita que el formulario se envíe si la validación falla
-        }
+    const passwordInput = document.getElementById('id_password1');
+    const strengthBar = document.getElementById('password-strength-bar');
+
+    passwordInput.addEventListener('input', function() {
+        const value = passwordInput.value;
+        const strength = calculatePasswordStrength(value);
+
+        strengthBar.style.width = strength.percent + '%';
+        strengthBar.setAttribute('aria-valuenow', strength.percent);
+        strengthBar.className = 'progress-bar ' + strength.color;
+        strengthBar.textContent = strength.text;
     });
+
+    function calculatePasswordStrength(password) {
+        let score = 0;
+
+        if (password.length >= 8) score++;
+        if (password.length >= 12) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[a-z]/.test(password)) score++;
+        if (/\d/.test(password)) score++;
+        if (/[!@#$%^&*()_+=-]/.test(password)) score++;
+
+        let percent = (score / 6) * 100;
+        let color = '';
+        let text = '';
+
+        if (score <= 2) {
+            color = 'bg-danger';
+            text = 'Insegura';
+        } else if (score <= 4) {
+            color = 'bg-warning';
+            text = 'Segura';
+        } else {
+            color = 'bg-success';
+            text = 'Muy segura';
+        }
+
+        return { percent: percent, color: color, text: text };
+    }
 });
-
-function validateForm() {
-    var nombreUsuario = document.getElementById('nombre-usuario').value;
-    var correoElectronico = document.getElementById('correo-electronico').value;
-    var contraseña = document.getElementById('contraseña').value;
-    var repetirContraseña = document.getElementById('repetir-contraseña').value;
-
-    // Verifica si todos los campos están llenos
-    if (!nombreUsuario || !correoElectronico || !contraseña || !repetirContraseña) {
-        alert("Por favor, complete todos los campos antes de registrarse.");
-        return false;
-    }
-
-    // Verifica si las contraseñas coinciden
-    if (contraseña !== repetirContraseña) {
-        alert("Las contraseñas no coinciden.");
-        return false;
-    }
-
-    return true; // Devuelve true si la validación es exitosa
-}

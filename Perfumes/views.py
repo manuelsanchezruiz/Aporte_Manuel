@@ -53,6 +53,9 @@ def Registrarce(request):
         form = RegistrarceForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.first_name = form.cleaned_data.get('nombres')
+            user.last_name = form.cleaned_data.get('apellidos')
+            user.save()
             try:
                 # Intentar obtener el grupo 'Clientes'
                 cliente_group = Group.objects.get(name='Clientes')

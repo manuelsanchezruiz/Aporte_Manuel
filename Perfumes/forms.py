@@ -14,15 +14,19 @@ class SecionForm(forms.Form):
     contraseña = forms.CharField(widget=forms.PasswordInput, label='Contraseña')
 
 class RegistrarceForm(UserCreationForm):
+    nombres = forms.CharField(max_length=50, label="Nombres")
+    apellidos = forms.CharField(max_length=50, label="Apellidos")
     email = forms.EmailField(label="Correo electrónico")
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Repetir contraseña", widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'nombres', 'apellidos', 'email', 'password1', 'password2']
         labels = {
             'username': 'Nombre de usuario',
+            'nombres': 'Nombres',
+            'apellidos': 'Apellidos',
             'password1': 'Contraseña',
             'password2': 'Repetir contraseña',
         }
