@@ -12,23 +12,42 @@ from .forms import RegistrarceForm, SecionForm, ProductoForm  # Asegúrate de im
 def index(request):
     return render(request, 'perfumes/Principal.html')  # Asegúrate de que 'Principal.html' exista
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from .models import Producto, Carrito
+
 @login_required
-def procesar_compra(request, producto_id):
+def procesar_compra(request, producto_id=None):
     if request.method == 'POST':
-        producto = get_object_or_404(Producto, id=producto_id)
         nombre = request.POST['nombre']
         direccion = request.POST['direccion']
         telefono = request.POST['telefono']
         correo = request.POST['correo']
-        cantidad = int(request.POST['cantidad'])
         
-        # Aquí puedes agregar lógica para procesar el pago y guardar los detalles de la compra
-        # Ejemplo: guardar la información de la compra en un modelo de Pedido (que necesitarías crear)
+        if producto_id:
+            producto = get_object_or_404(Producto, id=producto_id)
+            cantidad = int(request.POST['cantidad'])
+            
+            # Procesa la compra individual aquí
+            
+        else:
+            carrito = Carrito.objects.filter(usuario=request.user)
+            for item in carrito:
+                producto = item.producto
+                cantidad = item.cantidad
+                
+                # Procesa la compra desde el carrito aquí
+            
+            carrito.delete()
 
         return HttpResponse("Compra procesada con éxito!")
     else:
-        return redirect('detalle_producto', producto_id=producto_id)
-
+        if producto_id:
+            return redirect('detalle_producto', producto_id=producto_id)
+        else:
+            return redirect('ver_carrito')
+        
 def listar_productos(request):
     productos = Producto.objects.all()
     return render(request, 'perfumes/listar_productos.html', {'productos': productos})
@@ -123,7 +142,8 @@ def agregar_al_carrito(request, producto_id):
 @login_required
 def ver_carrito(request):
     carrito = Carrito.objects.filter(usuario=request.user)
-    return render(request, 'perfumes/carrito.html', {'carrito': carrito})
+    total_precio = sum(item.producto.precio * item.cantidad for item in carrito)
+    return render(request, 'perfumes/carrito.html', {'carrito': carrito, 'total_precio': total_precio})
 
 @login_required
 def eliminar_del_carrito(request, item_id):

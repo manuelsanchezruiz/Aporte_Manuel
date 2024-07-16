@@ -56,7 +56,31 @@
                         <a href="{% url 'eliminar_del_carrito' item.id %}" class="btn btn-sm btn-danger">Eliminar</a>
                     </li>
                     {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>${{ total_precio }}</strong>
+                    </li>
                 </ul>
+                <form method="post" action="{% url 'procesar_compra' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="correo" name="correo" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Comprar</button>
+                </form>
                 {% else %}
                 <p class="text-center">Tu carrito está vacío.</p>
                 {% endif %}
