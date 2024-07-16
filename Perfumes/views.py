@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import HttpResponse
 from .forms import RegistrarceForm, SecionForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Producto, Carrito
@@ -11,6 +12,22 @@ from .forms import RegistrarceForm, SecionForm, ProductoForm  # Asegúrate de im
 def index(request):
     return render(request, 'perfumes/Principal.html')  # Asegúrate de que 'Principal.html' exista
 
+@login_required
+def procesar_compra(request, producto_id):
+    if request.method == 'POST':
+        producto = get_object_or_404(Producto, id=producto_id)
+        nombre = request.POST['nombre']
+        direccion = request.POST['direccion']
+        telefono = request.POST['telefono']
+        correo = request.POST['correo']
+        cantidad = int(request.POST['cantidad'])
+        
+        # Aquí puedes agregar lógica para procesar el pago y guardar los detalles de la compra
+        # Ejemplo: guardar la información de la compra en un modelo de Pedido (que necesitarías crear)
+
+        return HttpResponse("Compra procesada con éxito!")
+    else:
+        return redirect('detalle_producto', producto_id=producto_id)
 
 def listar_productos(request):
     productos = Producto.objects.all()
@@ -118,3 +135,7 @@ def eliminar_del_carrito(request, item_id):
 def cerrar_sesion(request):
     logout(request)
     return redirect('Secion')
+
+def detalle_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    return render(request, 'perfumes/detalle_producto.html', {'producto': producto})
