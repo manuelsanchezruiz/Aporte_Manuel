@@ -34,6 +34,12 @@ INSTALLED_APPS = [
     'Perfumes.apps.PerfumesConfig',
 ]
 
+JAZZMIN_SETTINGS = {
+    "site_title": "Perfumes",
+    "site_logo": "perfumes/images/lotus.webp",
+    "site_icon": "perfumes/images/lotus.webp",
+    "site_brand": "Administración",
+}
 
 
 MIDDLEWARE = [
@@ -78,6 +84,9 @@ DATABASES = {
         conn_max_age=600
     )
 }
+
+
+
 
 
 
