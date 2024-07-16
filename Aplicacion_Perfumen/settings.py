@@ -78,6 +78,7 @@ WSGI_APPLICATION = 'Aplicacion_Perfumen.wsgi.application'
 
 import dj_database_url
 
+
 DATABASES = {
     'default': dj_database_url.config(
         default='postgresql://bd_perfumes_bow6_user:roFaEPtiatg2uUnL9ir9MSo1oyAbmdbP@dpg-cq3cje2ju9rs739cdnrg-a/bd_perfumes_bow6',

@@ -12,11 +12,6 @@ from .forms import RegistrarceForm, SecionForm, ProductoForm  # Asegúrate de im
 def index(request):
     return render(request, 'perfumes/Principal.html')  # Asegúrate de que 'Principal.html' exista
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from .models import Producto, Carrito
-
 @login_required
 def procesar_compra(request, producto_id=None):
     if request.method == 'POST':
@@ -41,7 +36,8 @@ def procesar_compra(request, producto_id=None):
             
             carrito.delete()
 
-        return HttpResponse("Compra procesada con éxito!")
+        messages.success(request, 'Compra procesada con éxito!')
+        return redirect('Principal')  # Redirige a la página principal después de la compra
     else:
         if producto_id:
             return redirect('detalle_producto', producto_id=producto_id)
