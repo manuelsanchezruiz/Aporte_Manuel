@@ -81,7 +81,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://bd_perfumes_bow6_user:roFaEPtiatg2uUnL9ir9MSo1oyAbmdbP@dpg-cq3cje2ju9rs739cdnrg-a/bd_perfumes_bow6',
+        default='postgresql://bd_perfume_user:TxnE6UBrfVdFDriPqWID9ZRFcHyx1LcP@dpg-cqrmtrg8fa8c73d6u0a0-a/bd_perfume',
         conn_max_age=600
     )
 }
