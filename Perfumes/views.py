@@ -129,10 +129,16 @@ def Principal(request):
 @login_required
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
-    carrito, creado = Carrito.objects.get_or_create(usuario=request.user, producto=producto)
-    if not creado:
-        carrito.cantidad += 1
-        carrito.save()
+    carrito_item, created = Carrito.objects.get_or_create(usuario=request.user, producto=producto)
+    
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'increase':
+            carrito_item.cantidad += 1
+        elif action == 'decrease' and carrito_item.cantidad > 1:
+            carrito_item.cantidad -= 1
+        carrito_item.save()
+
     return redirect('ver_carrito')
 
 @login_required

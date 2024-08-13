@@ -51,8 +51,22 @@
                             <h6 class="my-0">{{ item.producto.nombre }}</h6>
                             <small class="text-muted">{{ item.producto.descripcion }}</small>
                         </div>
-                        <span class="text-muted">${{ item.producto.precio }}</span>
-                        <span class="text-muted">Cantidad: {{ item.cantidad }}</span>
+                        <div>
+                            <span class="text-muted">Precio: ${{ item.producto.precio }}</span>
+                            <div class="d-flex">
+                                <form method="post" action="{% url 'agregar_al_carrito' item.producto.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="decrease">
+                                    <button class="btn btn-sm btn-secondary" type="submit">-</button>
+                                </form>
+                                <span class="mx-2">{{ item.cantidad }}</span>
+                                <form method="post" action="{% url 'agregar_al_carrito' item.producto.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="increase">
+                                    <button class="btn btn-sm btn-secondary" type="submit">+</button>
+                                </form>
+                            </div>
+                        </div>
                         <a href="{% url 'eliminar_del_carrito' item.id %}" class="btn btn-sm btn-danger">Eliminar</a>
                     </li>
                     {% endfor %}
@@ -61,26 +75,31 @@
                         <strong>${{ total_precio }}</strong>
                     </li>
                 </ul>
-                <form method="post" action="{% url 'procesar_compra' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="correo" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="correo" name="correo" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Comprar</button>
-                </form>
+                <div class="text-center">
+                    <button id="comprar-btn" class="btn btn-primary">Comprar</button>
+                </div>
+                <div id="formulario-compra" class="mt-4" style="display: none;">
+                    <form method="post" action="{% url 'procesar_compra' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="correo" name="correo" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Confirmar Compra</button>
+                    </form>
+                </div>
                 {% else %}
                 <p class="text-center">Tu carrito está vacío.</p>
                 {% endif %}
@@ -99,5 +118,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="{% static 'perfumes/js/scripts.js' %}"></script>
+<script>
+    document.getElementById('comprar-btn').addEventListener('click', function() {
+        document.getElementById('formulario-compra').style.display = 'block';
+        this.style.display = 'none';
+    });
+</script>
 </body>
 </html>
